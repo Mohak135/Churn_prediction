@@ -2,3 +2,13 @@ hello
 
 hi
 hiiii
+set.seed(1)
+
+# Generate sample
+x <- rbinom(50, size = 5, prob = 2/3)
+
+# Chi-square test
+observed <- table(x)
+expected <- dbinom(as.numeric(names(observed)), 5, 2/3) * 50
+
+chisq.test(observed, p = expected / sum(expected))
