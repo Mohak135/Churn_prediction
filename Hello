@@ -11,4 +11,85 @@ x <- rbinom(50, size = 5, prob = 2/3)
 observed <- table(x)
 expected <- dbinom(as.numeric(names(observed)), 5, 2/3) * 50
 
-chisq.test(observed, p = expected / sum(expected))
+chisq.test(observed, p = expected / sum(expected))i
+
+
+
+set.seed(1)
+
+x <- rpois(100, lambda = 2.5)
+
+# Mean and variance
+mean(x)
+var(x)
+
+# Chi-square test (5 intervals)
+chisq.test(table(cut(x, breaks = 5)))
+
+# Chi-square test (10 intervals)
+chisq.test(table(cut(x, breaks = 10)))
+
+
+set.seed(1)
+
+k <- 1:20
+prob <- ((log(5))^k) / (4^k * factorial(k))
+prob <- prob / sum(prob)
+
+x <- sample(k, size = 50, replace = TRUE, prob = prob)
+
+mean(x)
+var(x)
+
+# Chi-square tests
+chisq.test(table(cut(x, breaks = 5)))
+chisq.test(table(cut(x, breaks = 10)))
+
+set.seed(1)
+
+k <- 1:20
+prob <- exp(-1) * (1 / (2^k) + 1 / factorial(k))
+prob <- prob / sum(prob)
+
+x <- sample(k, size = 100, replace = TRUE, prob = prob)
+
+
+set.seed(1)
+
+k <- 1:20
+
+pxy1 <- 1 / (3 * 2^k)
+pxy2 <- (2^k) / (3^(k + 1))
+
+pxy1 <- pxy1 / sum(pxy1)
+pxy2 <- pxy2 / sum(pxy2)
+
+Y <- sample(c(1, 2), size = 100, replace = TRUE)
+
+X <- ifelse(
+  Y == 1,
+  sample(k, 100, replace = TRUE, prob = pxy1),
+  sample(k, 100, replace = TRUE, prob = pxy2)
+)
+
+Z <- X + Y
+
+mean(Z)
+var(Z)
+
+
+mean(x)
+var(x)
+
+chisq.test(table(cut(x, breaks = 5)))
+chisq.test(table(cut(x, breaks = 10)))
+
+set.seed(1)
+
+library(gtools)
+
+omega <- permutations(5, 5)
+sample_indices <- sample(1:nrow(omega), size = 10)
+
+sample_X <- omega[sample_indices, ]
+sample_X
